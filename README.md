@@ -6,7 +6,7 @@ The name **GoldenFern** and my GitHub avatar are directly derived from this proj
 
 While the classic Barnsley Fern is a well-known fractal, the version used for my avatar is a customized variation. By tweaking the affine transformation parameters and introducing a sine-based non-linearity in the leaflets, I created a more organic, "golden" curvature that represents the intersection of mathematics and nature.
 
-![Golden Fern Avatar](IFS.png)
+[![Golden Fern Avatar](assets/preview/IFS.webp)](IFS.png)
 
 ## 📖 Introduction
 
@@ -21,20 +21,20 @@ This repository provides a Python-based framework for visualizing 2D Fractal Geo
 
 ## 🖼️ Gallery
 
-Below are some examples of fractals generated using this script (located in the `examples/` directory):
+Below are some examples of fractals generated using this script (located in the `examples/` directory). Click any image to view the full-resolution PNG:
 
 <p align="center">
-  <img src="examples/20251204_134247.png" width="24%" />
-  <img src="examples/20251204_134307.png" width="24%" />
-  <img src="examples/20251204_134537.png" width="24%" />
-  <img src="examples/20251204_134610.png" width="24%" />
+  <a href="examples/20251204_134247.png"><img src="assets/preview/20251204_134247.webp" width="24%" alt="IFS fractal example 1" loading="lazy" /></a>
+  <a href="examples/20251204_134307.png"><img src="assets/preview/20251204_134307.webp" width="24%" alt="IFS fractal example 2" loading="lazy" /></a>
+  <a href="examples/20251204_134537.png"><img src="assets/preview/20251204_134537.webp" width="24%" alt="IFS fractal example 3" loading="lazy" /></a>
+  <a href="examples/20251204_134610.png"><img src="assets/preview/20251204_134610.webp" width="24%" alt="IFS fractal example 4" loading="lazy" /></a>
 </p>
 
 <p align="center">
-  <img src="examples/20251204_134319.png" width="24%" />
-  <img src="examples/20251204_134645.png" width="24%" />
-  <img src="examples/20251204_134702.png" width="24%" />
-  <img src="examples/20251204_134353.png" width="24%" />
+  <a href="examples/20251204_134319.png"><img src="assets/preview/20251204_134319.webp" width="24%" alt="IFS fractal example 5" loading="lazy" /></a>
+  <a href="examples/20251204_134645.png"><img src="assets/preview/20251204_134645.webp" width="24%" alt="IFS fractal example 6" loading="lazy" /></a>
+  <a href="examples/20251204_134702.png"><img src="assets/preview/20251204_134702.webp" width="24%" alt="IFS fractal example 7" loading="lazy" /></a>
+  <a href="examples/20251204_134353.png"><img src="assets/preview/20251204_134353.webp" width="24%" alt="IFS fractal example 8" loading="lazy" /></a>
 </p>
 
 ## 🚀 Getting Started
