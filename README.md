@@ -85,7 +85,7 @@ $$
 A = \bigcup_{i=1}^{n} f_i(A)
 $$
 
-The **Chaos Game** algorithm used in this script approximates this set $A$ by picking a random starting point $x_0$ and iteratively applying $x_{k+1} = f_{\sigma_k}(x_k)$, where $\sigma_k$ is chosen randomly from $\{1, \dots, n\}$ according to a probability distribution $p_i$.
+The **Chaos Game** algorithm used in this script approximates this set $A$ by picking a random starting point $x_0$ and iteratively applying $x_{k+1} = f_{\sigma_k}(x_k)$, where $\sigma_k$ is chosen randomly from $\lbrace 1, \dots, n \rbrace$ according to a probability distribution $p_i$.
 
 ### 2. Hausdorff Measure and Dimension
 
@@ -94,7 +94,7 @@ Standard Euclidean geometry (length, area, volume) fails to describe the complex
 For a set $F \subset \mathbb{R}^n$ and a real number $s \ge 0$, the $s$-dimensional Hausdorff measure $\mathcal{H}^s(F)$ is defined as:
 
 $$
-\mathcal{H}^s(F) = \lim_{\delta \to 0} \inf \left\{ \sum_{i=1}^{\infty} |U_i|^s : F \subset \bigcup_{i=1}^{\infty} U_i, |U_i| < \delta \right\}
+\mathcal{H}^s(F) = \lim_{\delta \to 0} \inf \left\lbrace \sum_{i=1}^{\infty} |U_i|^s : F \subset \bigcup_{i=1}^{\infty} U_i, |U_i| < \delta \right\rbrace
 $$
 
 where $|U_i|$ denotes the diameter of the set $U_i$. 
@@ -102,7 +102,7 @@ where $|U_i|$ denotes the diameter of the set $U_i$.
 The **Hausdorff Dimension** $d_H(F)$ is the unique value $s$ at which the measure $\mathcal{H}^s(F)$ jumps from $\infty$ to $0$:
 
 $$
-d_H(F) = \inf\{s : \mathcal{H}^s(F) = 0\} = \sup\{s : \mathcal{H}^s(F) = \infty\}
+d_H(F) = \inf\lbrace s : \mathcal{H}^s(F) = 0 \rbrace = \sup\lbrace s : \mathcal{H}^s(F) = \infty \rbrace
 $$
 
 For many IFS fractals (like the Sierpinski Triangle), the dimension is a non-integer (e.g., $\log 3 / \log 2 \approx 1.585$), which quantifies how the fractal fills space more effectively than a line but less so than a plane.

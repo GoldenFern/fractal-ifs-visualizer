@@ -85,7 +85,7 @@ $$
 A = \bigcup_{i=1}^{n} f_i(A)
 $$
 
-本脚本使用的**混沌游戏**算法通过随机选取起点 $x_0$，并迭代应用 $x_{k+1} = f_{\sigma_k}(x_k)$ 来逼近该集合 $A$。其中 $\sigma_k$ 按概率分布 $p_i$ 从 $\{1, \dots, n\}$ 中随机选取。
+本脚本使用的**混沌游戏**算法通过随机选取起点 $x_0$，并迭代应用 $x_{k+1} = f_{\sigma_k}(x_k)$ 来逼近该集合 $A$。其中 $\sigma_k$ 按概率分布 $p_i$ 从 $\lbrace 1, \dots, n \rbrace$ 中随机选取。
 
 ### 2. Hausdorff 测度与维数
 
@@ -94,7 +94,7 @@ $$
 对于集合 $F \subset \mathbb{R}^n$ 和实数 $s \ge 0$，$s$ 维 Hausdorff 测度 $\mathcal{H}^s(F)$ 定义为：
 
 $$
-\mathcal{H}^s(F) = \lim_{\delta \to 0} \inf \left\{ \sum_{i=1}^{\infty} |U_i|^s : F \subset \bigcup_{i=1}^{\infty} U_i, |U_i| < \delta \right\}
+\mathcal{H}^s(F) = \lim_{\delta \to 0} \inf \left\lbrace \sum_{i=1}^{\infty} |U_i|^s : F \subset \bigcup_{i=1}^{\infty} U_i, |U_i| < \delta \right\rbrace
 $$
 
 其中 $|U_i|$ 表示集合 $U_i$ 的直径。
@@ -102,7 +102,7 @@ $$
 **Hausdorff 维数** $d_H(F)$ 是使测度 $\mathcal{H}^s(F)$ 从 $\infty$ 跳变到 $0$ 的唯一 $s$ 值：
 
 $$
-d_H(F) = \inf\{s : \mathcal{H}^s(F) = 0\} = \sup\{s : \mathcal{H}^s(F) = \infty\}
+d_H(F) = \inf\lbrace s : \mathcal{H}^s(F) = 0 \rbrace = \sup\lbrace s : \mathcal{H}^s(F) = \infty \rbrace
 $$
 
 对于许多 IFS 分形（如谢尔宾斯基三角形），其维数是非整数（例如 $\log 3 / \log 2 \approx 1.585$），它刻画了该分形填充空间的能力强于一条线、但弱于一个平面。
