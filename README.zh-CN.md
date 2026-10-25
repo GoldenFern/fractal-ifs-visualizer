@@ -20,6 +20,8 @@
 - **交互式探索**：使用 `plotly` 的 WebGL（`Scattergl`）实现对包含数百万个点的分形进行实时缩放和平移。
 - **预置分形**：内置巴恩斯利蕨、谢尔宾斯基三角形、科赫曲线、龙形曲线、莱维 C 曲线等定义。
 - **随机分形生成器**：以程序化方式生成独特且数学上有效的压缩映射。
+- **加速生成**：Numba 编译的混沌游戏，并提供 NumPy 向量化和纯 Python 回退。
+- **密度图导出**：把百万级点集渲染成对数色标的二维直方图，速度快、文件小。
 
 ## 🖼️ 图库
 
@@ -46,7 +48,7 @@
 请确保已安装 Python 3.8 或更高版本，并安装所需的库：
 
 ```bash
-pip install numpy matplotlib plotly
+pip install numpy matplotlib plotly numba
 ```
 
 ### 使用方法
@@ -66,6 +68,47 @@ pip install numpy matplotlib plotly
    visualizer.generate_points(n_total=500000, m_discard=1000)
    visualizer.plot_matplotlib(save=True, color="blue")
    ```
+
+## ⚡ 性能
+
+安装 Numba 后，点集生成会自动使用它。混沌游戏被编译成单条本地循环，一百万次迭代在普通笔记本上约需 10 毫秒。仿射系统还有 NumPy 向量化回退，所有系统都保留纯 Python 回退。
+
+```python
+visualizer = IFSVisualizer(*define_barnsley_fern())
+visualizer.generate_points(1_000_000, 2_000, method="auto")
+print(visualizer.backend)  # "numba"、"numpy" 或 "python"
+```
+
+`method` 可选：
+
+- `"auto"`：优先 Numba，仿射系统其次用 NumPy，最后用 Python。
+- `"numba"`：编译后的单条轨道。
+- `"numpy"`：多条独立的仿射链。
+- `"python"`：原来的纯 Python 循环。
+
+点集很大时，密度图的导出速度和文件体积都明显优于散点图：
+
+```python
+visualizer.plot_matplotlib(
+    save=True,
+    filename="fern_density.png",
+    mode="density",  # 对数色标的二维直方图
+    bins=2000,
+    dpi=700,
+)
+```
+
+在一台机器上使用 100 万个点实测：
+
+| 步骤 | 耗时 |
+|---|---|
+| 生成，Python 循环 | 0.27 s |
+| 生成，NumPy 仿射多链 | 0.037 s |
+| 生成，Numba | 0.008 s |
+| 保存散点图，700 dpi | 4.7 s，15.2 MB |
+| 保存密度图，2000 bins | 0.54 s，0.48 MB |
+
+可以用 `python benchmarks/benchmark.py` 复现这些数字。首次调用 Numba 会有一次编译开销。仿射内核会缓存到磁盘，后续进程可以直接复用。Plotly 输出可以用 `max_points=200_000` 和 `include_plotlyjs="cdn"` 控制 HTML 体积。
 
 ## 🧮 数学原理
 

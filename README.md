@@ -20,6 +20,8 @@ This repository provides a Python-based framework for visualizing 2D Fractal Geo
 - **Interactive Exploration**: Uses `plotly` with WebGL (`Scattergl`) for real-time zooming and panning of fractals with millions of points.
 - **Predefined Fractals**: Includes definitions for the Barnsley Fern, Sierpinski Triangle, Koch Curve, Dragon Curve, Lévy C Curve, and more.
 - **Random Fractal Generator**: A module to procedurally generate unique, mathematically valid contraction mappings.
+- **Accelerated Generation**: A Numba-compiled chaos game, with vectorized NumPy and pure Python fallbacks.
+- **Density-Map Export**: Render millions of points as a log-scaled 2D histogram for fast, compact images.
 
 ## 🖼️ Gallery
 
@@ -46,7 +48,7 @@ Below are some examples of fractals generated using this script (located in the 
 Ensure you have Python 3.8+ installed. Install the required libraries:
 
 ```bash
-pip install numpy matplotlib plotly
+pip install numpy matplotlib plotly numba
 ```
 
 ### Usage
@@ -66,6 +68,47 @@ pip install numpy matplotlib plotly
    visualizer.generate_points(n_total=500000, m_discard=1000)
    visualizer.plot_matplotlib(save=True, color="blue")
    ```
+
+## ⚡ Performance
+
+Point generation uses [Numba](https://numba.pydata.org/) automatically when it is installed. The chaos game is compiled into a single native loop, so one million iterations take about 10 ms on a typical laptop. Affine systems also have a vectorized NumPy fallback, and every system keeps a pure Python fallback.
+
+```python
+visualizer = IFSVisualizer(*define_barnsley_fern())
+visualizer.generate_points(1_000_000, 2_000, method="auto")
+print(visualizer.backend)  # "numba", "numpy" or "python"
+```
+
+`method` accepts:
+
+- `"auto"`: Numba when available, then NumPy for affine maps, then Python.
+- `"numba"`: compiled single trajectory.
+- `"numpy"`: multiple independent affine chains.
+- `"python"`: the original loop.
+
+For large point sets, a density map is much faster to export than a scatter plot and produces a much smaller file:
+
+```python
+visualizer.plot_matplotlib(
+    save=True,
+    filename="fern_density.png",
+    mode="density",  # log-scaled 2D histogram
+    bins=2000,
+    dpi=700,
+)
+```
+
+Measured with 1,000,000 points on one machine:
+
+| Step | Time |
+|---|---|
+| Generate, Python loop | 0.27 s |
+| Generate, NumPy affine chains | 0.037 s |
+| Generate, Numba | 0.008 s |
+| Save scatter, 700 dpi | 4.7 s, 15.2 MB |
+| Save density map, 2000 bins | 0.54 s, 0.48 MB |
+
+Run `python benchmarks/benchmark.py` to reproduce these numbers. The first Numba call pays a one-time compilation cost. The affine kernel is cached on disk, so later processes reuse it. Plotly output can be capped with `max_points=200_000` and `include_plotlyjs="cdn"` to keep the HTML file small.
 
 ## 🧮 Mathematical Principles
 
